@@ -41,7 +41,7 @@ public class RecensioneController {
         Recensione r=new Recensione();
         model.addAttribute("recensione", r);
         model.addAttribute("libro", this.libroService.findById(libroId));
-        return "nuovRecensione";
+        return "nuovaRecensione";
 
     }
 

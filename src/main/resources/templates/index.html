@@ -16,6 +16,7 @@
         <a th:href="@{/regi}" th:if="${not #authorization.expr('isAuthenticated()')}">Registrati</a>
         <a th:href="@{/user}" th:if="${#authorization.expr('isAuthenticated()')}">Area Personale</a>
         <a th:href="@{/logout}" th:if="${#authorization.expr('isAuthenticated()')}">Logout</a>
+        <a th:href="@{/admin}" th:if="${#authorization.expr('hasRole(''ROLE_ADMIN'')')}">Area Amministratore</a>
     </nav>
     <hr>
 </header>

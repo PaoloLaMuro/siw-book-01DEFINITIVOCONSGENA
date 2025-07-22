@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Modifica / Elimina Autore</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: rgba(255,255,255,0.7);
+            backdrop-filter: blur(8px);
+            font-family: 'Garamond', 'Times New Roman', serif;
+            min-height: 100vh;
+            padding: 30px;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #dc3545;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        label {
+            font-weight: bold;
+            color: #dc3545;
+        }
+
+        button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            font-size: 1rem;
+            font-family: 'Garamond', serif;
+            transition: all 0.3s;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #b02a37;
+            transform: scale(1.02);
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: auto;
+            background-color: #fff;
+            border: 1px solid #dc3545;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(220, 53, 69, 0.2);
+        }
+
+        nav a {
+            color: #dc3545;
+            font-weight: bold;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+<header class="mb-4">
+    <h1>Modifica o Elimina Autore</h1>
+    <nav class="text-center">
+        <a th:href="@{/autori}">Torna alla lista Autori</a>
+    </nav>
+</header>
+
+<main>
+    <div class="form-container">
+        <!-- Form Modifica -->
+        <form th:action="@{'/admin/autore/modifica/' + ${autore.id}}"
+              th:object="${autore}" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" th:field="*{nome}" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+                <label for="cognome">Cognome:</label>
+                <input type="text" id="cognome" th:field="*{cognome}" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+                <label for="dataNascita">Data di Nascita:</label>
+                <input type="date" id="dataNascita" th:field="*{dataNascita}" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+                <label for="dataMorte">Data di Morte:</label>
+                <input type="date" id="dataMorte" th:field="*{dataMorte}" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+                <label for="nazionalita">Nazionalità:</label>
+                <input type="text" id="nazionalita" th:field="*{nazionalita}" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+                <label for="immagine">Immagine dell'autore:</label>
+                <input type="file" id="immagine" name="fileImmagine" class="form-control" accept="image/*" />
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center">
+                <button type="submit">Salva Modifiche</button>
+                <form th:action="@{'/admin/autore/rimuovi/' + ${autore.id}}" method="post"
+                      onsubmit="return confirm('Sei sicuro di voler eliminare questo autore?');" class="ms-2">
+                    <button type="submit" class="btn btn-outline-danger">Elimina Autore</button>
+                </form>
+            </div>
+        </form>
+    </div>
+</main>
+
+<footer>
+    <hr />
+    <p>&copy; 2025 Biblioteca Digitale</p>
+</footer>
+
+</body>
+</html>

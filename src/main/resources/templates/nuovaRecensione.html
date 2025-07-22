@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nuova Recensione</title>
+    <link rel="stylesheet" href="/css/style.css" />
+<style>
+    .star-rating {
+        direction: rtl; /* stelle da destra a sinistra */
+        font-size: 2rem;
+        unicode-bidi: bidi-override;
+        display: inline-flex;
+    }
+
+    .star-rating input {
+        display: none; /* nascondi i radio button */
+    }
+
+    .star-rating label {
+        color: #ccc;
+        cursor: pointer;
+        transition: color 0.2s;
+        user-select: none;
+    }
+
+    .star-rating input:checked ~ label,
+    .star-rating label:hover,
+    .star-rating label:hover ~ label {
+        color: gold;
+    }
+
+</style>
+
+</head>
+<body>
+
+<header>
+    <h1>Scrivi una recensione per: <span th:text="${libro.titolo}">Titolo Libro</span></h1>
+    <nav>
+        <a th:href="@{/}">Home</a> |
+        <a th:href="@{/libri}">Libri</a> |
+        <a th:href="@{/autori}">Autori</a> |
+        <span th:if="${#authentication.principal != 'anonymousUser'}">
+            <span th:text="${username}">Utente</span> |
+            <a th:href="@{/logout}">Logout</a>
+        </span>
+        <span th:if="${#authentication.principal == 'anonymousUser'}">
+            <a th:href="@{/login}">Login</a> |
+            <a th:href="@{/registrazione}">Registrati</a>
+        </span>
+    </nav>
+    <hr/>
+</header>
+
+<main>
+    <form th:action="@{'/recensioni/inserisci/' + ${libro.id}}" th:object="${recensione}" method="post">
+        <div>
+            <label for="titolo">Titolo:</label><br/>
+            <input type="text" id="titolo" th:field="*{titolo}" required />
+        </div>
+
+        <div>
+            <label for="testo">Testo:</label><br/>
+            <textarea id="testo" th:field="*{testo}" rows="5" cols="50" required></textarea>
+        </div>
+
+        <div>
+            <label>Voto:</label><br/>
+            <div class="star-rating">
+                <input type="radio" id="star5" name="voto" value="5" required />
+                <label for="star5" title="5 stelle">★</label>
+
+                <input type="radio" id="star4" name="voto" value="4" />
+                <label for="star4" title="4 stelle">★</label>
+
+                <input type="radio" id="star3" name="voto" value="3" />
+                <label for="star3" title="3 stelle">★</label>
+
+                <input type="radio" id="star2" name="voto" value="2" />
+                <label for="star2" title="2 stelle">★</label>
+
+                <input type="radio" id="star1" name="voto" value="1" />
+                <label for="star1" title="1 stella">★</label>
+            </div>
+        </div>
+
+        <div>
+            <button type="submit">Invia Recensione</button>
+        </div>
+    </form>
+
+    <div>
+        <a th:href="@{'/libri/' + ${libro.id}}">← Torna al libro</a>
+    </div>
+</main>
+
+<footer>
+    <hr/>
+    <p>&copy; 2025 Biblioteca Online</p>
+</footer>
+
+</body>
+</html>

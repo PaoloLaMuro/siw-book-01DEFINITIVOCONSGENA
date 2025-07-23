@@ -5,8 +5,8 @@ body {
     background-image: url('/images/biblioteca.jpg');
     background-attachment: fixed;
     background-size: cover;
-    min-height: 100vh;
-    color: #333;
+    min-height: 120vh;
+    color: #f5f7f6;
     font-family: 'Garamond', 'Times New Roman', serif;
     padding: 20px;
     animation: fadeIn 1.5s ease-out;
@@ -19,7 +19,7 @@ body {
 
 h1 {
     font-family: 'Optima', 'Trajan Pro', serif;
-    font-size: 3.5rem;
+    font-size: 5.5rem;
     letter-spacing: 2px;
     color: #dc3545;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);

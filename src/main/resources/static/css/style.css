@@ -2,7 +2,7 @@ body {
     background-color: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    background-image: url('/images/falo.jpeg');
+    background-image: url('/images/biblioteca.jpg');
     background-attachment: fixed;
     background-size: cover;
     min-height: 100vh;

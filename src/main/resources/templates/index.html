@@ -13,7 +13,7 @@
     <nav>
         <a th:href="@{/}">Home</a>
         <a th:href="@{/login}" th:if="${not #authorization.expr('isAuthenticated()')}">Login</a>
-        <a th:href="@{/regi}" th:if="${not #authorization.expr('isAuthenticated()')}">Registrati</a>
+        <a th:href="@{/register}" th:if="${not #authorization.expr('isAuthenticated()')}">Registrati</a>
         <a th:href="@{/user}" th:if="${#authorization.expr('isAuthenticated()')}">Area Personale</a>
         <a th:href="@{/logout}" th:if="${#authorization.expr('isAuthenticated()')}">Logout</a>
         <a th:href="@{/admin}" th:if="${#authorization.expr('hasRole(''ROLE_ADMIN'')')}">Area Amministratore</a>
@@ -47,7 +47,7 @@
 
 <footer>
     <hr>
-    <p>&copy; 2025 Gli Archivi del Duca</p>
+    <p>&copy;CENERI D'ALESSANDRIA</p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

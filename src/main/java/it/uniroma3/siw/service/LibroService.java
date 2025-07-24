@@ -105,6 +105,9 @@ public class LibroService {
 
 
     public List<Libro> ricercaLibriPerVotoMedio(Double votoMedio) {
+        if(votoMedio == 0.0) {
+            return libroRepository.findAllWithoutRecensioni();
+        }
     return libroRepository.findByValutazione(votoMedio);
 }
 

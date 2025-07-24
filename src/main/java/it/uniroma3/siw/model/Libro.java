@@ -48,7 +48,7 @@ public class Libro {
     private Set<Autore> autori = new HashSet<>();
 
 
-    @OneToMany(mappedBy = "libro", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "libro", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Recensione> recensioni;
 
 

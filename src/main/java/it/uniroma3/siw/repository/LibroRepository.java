@@ -16,4 +16,13 @@ public interface LibroRepository extends CrudRepository<Libro, Long> {
     @Query("SELECT DISTINCT l FROM Libro l LEFT JOIN FETCH l.autori")
     List<Libro> findAllWithAutori();
 
+    List<Libro> findByTitolo(String titolo);
+
+
+    @Query("SELECT l FROM Libro l LEFT JOIN l.recensioni r GROUP BY l.id HAVING ROUND(AVG(r.voto),1) = ROUND(:votoMedio,1)")
+    List<Libro> findByValutazione(Double votoMedio);
+
+
+   
+
 }

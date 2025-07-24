@@ -65,7 +65,7 @@ public class AutoreController {
             autore.setImmagineAutore(immagine);
         }
         autoreService.salvaAutore(autore);
-        return "redirect:/autori";
+        return "redirect:/success";
     }
 
     @PostMapping("/admin/autore/modifica/{id}")

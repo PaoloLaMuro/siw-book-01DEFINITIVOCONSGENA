@@ -31,7 +31,7 @@ public class Recensione {
     private int voto;
 
     @ManyToOne
-    @JoinColumn(name = "libro_id", nullable = false)
+    @JoinColumn(name = "libro_id")
     private Libro libro;
 
     @ManyToOne

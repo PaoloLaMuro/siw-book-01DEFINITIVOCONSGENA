@@ -9,8 +9,7 @@
 <body>
 
 <header>
-    <h1 th:if="${libro != null}" th:text="${libro.titolo}">Titolo Libro</h1>
-    <h1 th:if="${libro == null}" class="text-danger">Libro non trovato</h1>
+    <h1 th:text="${libro.titolo}">Titolo Libro</h1>
     <nav>
         <a th:href="@{/}">Home</a>
         <a th:href="@{/libri}">Libri</a>
@@ -31,7 +30,7 @@
     </div>
 
     <!-- Dettagli libro -->
-    <section class="mb-5" th:if="${libro != null}">
+    <section class="mb-5">
         <h2 class="text-center" style="color: #fff;">Dettagli</h2>
         <div class="text-center mb-4" th:if="${libro.copertina != null}">
             <img th:src="@{'data:image/jpeg;base64,'+${libro.copertina.generateBase64Image()}}"
@@ -49,14 +48,11 @@
             </p>
         </div>
     </section>
-    <section class="mb-5" th:if="${libro == null}">
-        <p class="text-center text-danger fs-4">Impossibile visualizzare i dettagli: libro non trovato.</p>
-    </section>
 
     <!-- Recensioni -->
-    <section class="mb-5" th:if="${libro != null}">
+    <section class="mb-5">
         <h2 class="text-center" style="color: #fff;">Recensioni</h2>
-        <div th:if="${recensioni == null or #lists.isEmpty(recensioni)}" class="text-center">
+        <div th:if="${#lists.isEmpty(recensioni)}" class="text-center">
             <p class="fst-italic" style="color: #fff;">Nessuna recensione per questo libro.</p>
         </div>
 
@@ -66,12 +62,16 @@
                 <p class="mb-1"><strong style="color: #dc3545;">Voto:</strong> <span th:text="${recensione.voto}" style="color: #dc3545;">5</span>/5</p>
                 <p th:text="${recensione.testo}" style="color: #dc3545;">Testo recensione</p>
                 <p class="text-end" style="color: #dc3545;"><em>di <span th:text="${recensione.autore.name}" style="color: #dc3545;">utente</span></em></p>
+                <!-- Bottone elimina recensione -->
+                <form th:action="@{'/recensioni/admin/recensione/elimina/' + ${recensione.id}}" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-outline-danger btn-sm fw-bold mt-2">Elimina</button>
+                </form>
             </div>
         </div>
     </section>
 
     <!-- Scrivi recensione -->
-    <section class="text-center mb-5" th:if="${libro != null}">
+    <section class="text-center mb-5">
         <h2 style="color: #fff;">Lascia una recensione</h2>
         <div th:if="${#authentication.principal == 'anonymousUser'}">
             <p><a th:href="@{/login}" class="text-danger fw-bold">Accedi</a> per lasciare una recensione.</p>

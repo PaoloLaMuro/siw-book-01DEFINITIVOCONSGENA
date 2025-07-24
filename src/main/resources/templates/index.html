@@ -23,7 +23,7 @@
 
 <main>
     <section class="welcome">
-        <h2>dai Tolomei ad i giorni nostri..</h2>
+        <h2>dai Tolomei fino ai giorni nostri..</h2>
         <p>
             Un omaggio alla leggendaria Biblioteca d’Alessandria: ciò che il fuoco disperse, qui proviamo a riunirlo in digitale.
             Sfoglia, scopri, alimenta la fiamma del sapere che non si è mai spenta.
@@ -41,6 +41,10 @@
             <form th:action="@{/autori}" method="get">
                 <button type="submit">Vedi Autori</button>
             </form>
+            <form th:action="@{/ricerca}" method="get">
+                <button type="submit">Cerca Libro</button>
+            </form>
+
         </div>
     </section>
 </main>

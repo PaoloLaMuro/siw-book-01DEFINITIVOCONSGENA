@@ -1,6 +1,7 @@
 package it.uniroma3.siw.service;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -69,6 +70,7 @@ public class LibroService {
         return (media != null) ? media : 0.0;
     }
 
+
     @Transactional
     public void updateLibro(Libro libroDaAggiornare, List<Long> autoreIds, MultipartFile nuovaImmagine) throws IOException {
         Libro libro = libroRepository.findById(libroDaAggiornare.getId())
@@ -95,5 +97,17 @@ public class LibroService {
 
         libroRepository.save(libro);
     }
+
+    public List<Libro> ricercaLibri(String titolo) {
+        return libroRepository.findByTitolo(titolo);
+    }
+
+
+
+    public List<Libro> ricercaLibriPerVotoMedio(Double votoMedio) {
+        return libroRepository.findByValutazione(votoMedio);
+    }
+
+    
 
 }

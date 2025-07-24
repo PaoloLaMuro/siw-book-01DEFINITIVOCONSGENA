@@ -17,13 +17,16 @@
 
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom border-danger shadow-sm mb-4 px-4">
-    <a class="navbar-brand fw-bold text-danger" th:href="@{/}">Archivi del Duca</a>
-    <a th:href="@{/success}">Torna alla Home Admin</a>
+    <a class="navbar-brand fw-bold text-danger" th:href="@{/}">CENERI D'ALESSANDRIA</a>
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav ms-auto">
             <li class="nav-item"><a class="nav-link text-danger fw-bold" th:href="@{/}">Home</a></li>
             <li class="nav-item"><a class="nav-link text-danger fw-bold" th:href="@{/libri}">Libri</a></li>
-            <li class="nav-item"><a class="nav-link text-danger fw-bold" th:href="@{/login}">Login</a></li>
+            <li class="nav-item" th:if="${not #authorization.expr('isAuthenticated()')}"><a class="nav-link text-danger fw-bold" th:href="@{/login}">Login</a></li>
+            <li class="nav-item" th:if="${not #authorization.expr('isAuthenticated()')}"><a class="nav-link text-danger fw-bold" th:href="@{/register}">Registrati</a></li>
+            <li class="nav-item" th:if="${#authorization.expr('isAuthenticated()')}"><a class="nav-link text-danger fw-bold" th:href="@{/user}">Area Personale</a></li>
+            <li class="nav-item" th:if="${#authorization.expr('isAuthenticated()')}"><a class="nav-link text-danger fw-bold" th:href="@{/logout}">Logout</a></li>
+            <li class="nav-item" th:if="${#authorization.expr('hasRole(''ROLE_ADMIN'')')}"><a class="nav-link text-danger fw-bold" th:href="@{/admin}">Area Amministratore</a></li>
         </ul>
     </div>
 </nav>
@@ -31,13 +34,7 @@
 <div class="container">
     <h1 class="text-center text-danger mb-4">Lista degli Autori</h1>
 
-    <!-- Debug: autenticazione -->
-    <div class="alert alert-info" sec:authorize="isAuthenticated()">
-        <strong>Sei autenticato!</strong>
-    </div>
-    <div class="alert alert-warning" sec:authorize="hasAuthority('ADMIN')">
-        <strong>Hai ruolo ADMIN</strong>
-    </div>
+    
 
     <!-- Messaggio se vuoto -->
     <div th:if="${#lists.isEmpty(autori)}" class="alert alert-secondary text-center">

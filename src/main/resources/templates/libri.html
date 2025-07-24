@@ -23,13 +23,16 @@
 
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom border-danger shadow-sm mb-4 px-4">
-    <a class="navbar-brand fw-bold text-danger" th:href="@{/}">Archivi del Duca</a>
-    <a th:href="@{/success}">Torna alla Home Admin</a>
+    <a class="navbar-brand fw-bold text-danger" th:href="@{/}">CENERI D'ALESSANDRIA</a>
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav ms-auto">
             <li class="nav-item"><a class="nav-link text-danger fw-bold" th:href="@{/}">Home</a></li>
             <li class="nav-item"><a class="nav-link text-danger fw-bold" th:href="@{/autori}">Autori</a></li>
-            <li class="nav-item"><a class="nav-link text-danger fw-bold" th:href="@{/login}">Login</a></li>
+            <li class="nav-item" th:if="${not #authorization.expr('isAuthenticated()')}"><a class="nav-link text-danger fw-bold" th:href="@{/login}">Login</a></li>
+            <li class="nav-item" th:if="${not #authorization.expr('isAuthenticated()')}"><a class="nav-link text-danger fw-bold" th:href="@{/register}">Registrati</a></li>
+            <li class="nav-item" th:if="${#authorization.expr('isAuthenticated()')}"><a class="nav-link text-danger fw-bold" th:href="@{/user}">Area Personale</a></li>
+            <li class="nav-item" th:if="${#authorization.expr('isAuthenticated()')}"><a class="nav-link text-danger fw-bold" th:href="@{/logout}">Logout</a></li>
+            <li class="nav-item" th:if="${#authorization.expr('hasRole(''ROLE_ADMIN'')')}"><a class="nav-link text-danger fw-bold" th:href="@{/admin}">Area Amministratore</a></li>
         </ul>
     </div>
 </nav>
@@ -71,7 +74,11 @@
                         </span>
                     </p>
                     <p class="card-text mb-2">
-                        <strong>Valutazione:</strong>
+                        <form th:action="@{/libriPerVoto}" method="get" style="display:inline;"
+                              th:with="v=${mediaVotiMap.get(libro.id)}, votoArrotondato=${T(java.lang.Math).round(v)}">
+                            <input type="hidden" name="valutazione" th:value="${votoArrotondato}" />
+                            <button type="submit" class="btn btn-outline-warning btn-sm fw-bold">Valutazione</button>
+                        </form>
                         <span th:if="${mediaVotiMap.get(libro.id) == null}">Nessuna recensione</span>
                         <span class="star-rating" th:if="${mediaVotiMap.get(libro.id) != null}"
                               th:with="v=${mediaVotiMap.get(libro.id)}, votoArrotondato=${T(java.lang.Math).round(v)}">

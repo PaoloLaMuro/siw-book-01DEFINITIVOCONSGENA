@@ -12,6 +12,8 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -30,6 +32,8 @@ import it.uniroma3.siw.service.AutoreService;
 import it.uniroma3.siw.service.LibroService;
 import it.uniroma3.siw.service.RecensioneService;
 import jakarta.transaction.Transactional;
+
+
 
 @Controller 
 public class LibroController {
@@ -83,11 +87,52 @@ public class LibroController {
             Iterable<Recensione> recensioni = recensioneService.getRecensioniByLibro(libro);
             model.addAttribute("libro", libro);
             model.addAttribute("recensioni", recensioni);
+
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (authentication != null && authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN") || a.getAuthority().equals("ROLE_ADMIN"))) {
+                return "admin/dettagliLibroAdmin";
+            }
             return "dettagliLibro";
         }
         return "dettagliLibro";
     }
 
+
+
+    @GetMapping("/ricerca")
+    public String ricercaLibriForm(Model model) {
+        model.addAttribute("titolo", "");
+        return "ricerca";
+    }
+
+    @PostMapping("/ricercaLibro")
+    public String ricercaLibro(@RequestParam("titolo") String titolo, Model model) {
+        List<Libro> risultati = libroService.ricercaLibri(titolo);
+        
+        if (risultati != null && !risultati.isEmpty()) {
+            // Se trovi più giochi con lo stesso titolo, mostra il primo
+            model.addAttribute("libro", risultati.get(0));
+            model.addAttribute("recensioni", recensioneService.getRecensioniByLibro(risultati.get(0)));
+            // Puoi anche passare la lista se vuoi gestire più risultati
+            return "dettagliLibro";
+        } else {
+            model.addAttribute("errorMessage", "Nessun libro trovato con questo titolo.");
+            return "ricerca";
+        }
+        
+    }
+
+    @GetMapping("/libriPerVoto")
+    public String libriPerVoto(@RequestParam("valutazione") Integer votoArrotondato, Model model) {
+        List<Libro> libri = libroService.ricercaLibriPerVotoMedio(votoArrotondato.doubleValue());
+        model.addAttribute("libri", libri);
+        model.addAttribute("votoArrotondato", votoArrotondato);
+        return "libriPerVoto";
+    }
+
+
+
+    
 
 
     //admin
@@ -167,7 +212,7 @@ public class LibroController {
         libroRepository.save(libro);
 
         System.out.println(" Libro salvato con successo (ID: " + libro.getId() + ")");
-        return "redirect:/libri";
+        return "redirect:/success";
     }
 
 
@@ -216,6 +261,7 @@ public class LibroController {
         return "redirect:/libri";
     }
 
+   
 
 
 

@@ -19,7 +19,7 @@ public interface LibroRepository extends CrudRepository<Libro, Long> {
     List<Libro> findByTitolo(String titolo);
 
 
-    @Query("SELECT l FROM Libro l LEFT JOIN l.recensioni r GROUP BY l.id HAVING ROUND(AVG(r.voto),1) = ROUND(:votoMedio,1)")
+    @Query("SELECT l FROM Libro l LEFT JOIN l.recensioni r GROUP BY l.id HAVING ROUND(AVG(r.voto),0) = :votoMedio")
     List<Libro> findByValutazione(Double votoMedio);
 
 

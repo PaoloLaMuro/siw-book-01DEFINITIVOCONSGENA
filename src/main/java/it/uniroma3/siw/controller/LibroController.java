@@ -57,6 +57,27 @@ public class LibroController {
 
 
 
+    // @GetMapping("/libri")
+    // @Transactional
+    // public String getLibri(Model model) {
+    //     List<Libro> libri = libroService.findAll();
+    //     model.addAttribute("libri", libri);
+    //     Set<Autore> autori= new HashSet<>();
+    //     Map<Long,Double> mediaVotiMap = new HashMap<>();
+
+    //     for(Libro l : libri){
+    //         autori.addAll(l.getAutori());
+    //         double media= libroService.calcolaMediaVoti(l.getId());
+    //         mediaVotiMap.put(l.getId(), media);
+    //     }
+
+    //     model.addAttribute("autori", autori);
+    //     model.addAttribute("libri", libri);
+    //     model.addAttribute("mediaVotiMap", mediaVotiMap);
+    //     return "libri";
+    // }
+
+    
     @GetMapping("/libri")
     @Transactional
     public String getLibri(Model model) {
@@ -76,6 +97,11 @@ public class LibroController {
         model.addAttribute("mediaVotiMap", mediaVotiMap);
         return "libri";
     }
+
+
+
+
+
 
 
     @GetMapping("/libri/{id}")
@@ -122,13 +148,14 @@ public class LibroController {
         
     }
 
+
     @GetMapping("/libriPerVoto")
-    public String libriPerVoto(@RequestParam("valutazione") Integer votoArrotondato, Model model) {
-        List<Libro> libri = libroService.ricercaLibriPerVotoMedio(votoArrotondato.doubleValue());
-        model.addAttribute("libri", libri);
-        model.addAttribute("votoArrotondato", votoArrotondato);
-        return "libriPerVoto";
-    }
+public String libriPerVoto(@RequestParam("valutazione") Integer votoArrotondato, Model model) {
+    List<Libro> libri = libroService.ricercaLibriPerVotoMedio(votoArrotondato.doubleValue());
+    model.addAttribute("libri", libri);
+    model.addAttribute("votoArrotondato", votoArrotondato);
+    return "libriPerVoto";
+}
 
 
 

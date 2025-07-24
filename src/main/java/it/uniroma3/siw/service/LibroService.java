@@ -105,8 +105,8 @@ public class LibroService {
 
 
     public List<Libro> ricercaLibriPerVotoMedio(Double votoMedio) {
-        return libroRepository.findByValutazione(votoMedio);
-    }
+    return libroRepository.findByValutazione(votoMedio);
+}
 
     
 
